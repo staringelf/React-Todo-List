@@ -8,6 +8,7 @@ function App() {
   console.log(todos);
   function addTodo(e) {
     e.preventDefault();
+    if (!todo) return;
     setTodos ([...todos, todo]);
   }
 
@@ -20,6 +21,12 @@ function App() {
         </label>
         <button type="submit" onClick={addTodo}>Add Todo</button>
       </form>
+      <ul className="todos">
+        {todos.map((todo) => (
+          <li>{todo}</li>
+        ))}
+      </ul>
+
    </div>
   );
 }
