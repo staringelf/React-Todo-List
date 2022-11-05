@@ -5,6 +5,7 @@ import Todo from "./components/Todo";
 function App() {
 
   const [todos, setTodos] = useState([]);
+  const [completedAll, setCompletedAll] = useState(false);
 
   function addTodo(todo) {
     setTodos([
@@ -40,6 +41,16 @@ function App() {
     ));
   }
 
+  function completeAll() {
+    setTodos(todos.map((todo) => (
+      { 
+        ...todo,
+        completed: !completedAll
+      }
+    )));
+    setCompletedAll(!completedAll);
+  }
+
   return (
     <div>
       <Form 
@@ -57,8 +68,8 @@ function App() {
       </ul>
 
       <button onClick={deleteAll}>Delete All</button>
-      
       <button onClick={toggleAll}>Toggle All</button>
+      <button onClick={completeAll}>Complete All</button>
    </div>
   );
 }
