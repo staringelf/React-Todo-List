@@ -21,6 +21,15 @@ function App() {
     setTodos([]);
   }
 
+  function toggleTodo(id){
+    setTodos(todos.map((todo) => (
+      todo.id === id ? {
+        ...todo,
+        completed: !todo.completed
+      } : todo
+    )))
+  }
+
   function toggleAll(){
     setTodos(todos.map((todo) => (
       {
@@ -42,7 +51,8 @@ function App() {
             text={text} 
             id={id} 
             completed={completed}
-            deleteTodo={deleteTodo}/>
+            deleteTodo={deleteTodo}
+            toggleTodo={toggleTodo}/>
         ))}
       </ul>
 
