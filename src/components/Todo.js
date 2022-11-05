@@ -1,6 +1,9 @@
-function Todo ({ todo }) {
+function Todo ({ text, id, deleteTodo }) {
   return (
-    <li>{todo}</li>
+    <li id={id}>
+      <span>{text}</span>
+      <button onClick={() => deleteTodo(id)}>X</button>
+    </li>
   )
 }
 

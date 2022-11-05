@@ -13,14 +13,21 @@ function App() {
     ])
   }
 
+  function deleteTodo(id) {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  }
+
   return (
     <div>
       <Form 
         addTodo={addTodo} 
       />
       <ul className="todos">
-        {todos.map((todo) => (
-          <Todo todo={todo} />
+        {todos.map(({ text, id }) => (
+          <Todo 
+            text={text} 
+            id={id} 
+            deleteTodo={deleteTodo}/>
         ))}
       </ul>
 

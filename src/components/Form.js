@@ -1,24 +1,28 @@
 import { useState } from "react";
+import { nanoid } from 'nanoid'
 
 function Form ({ addTodo }) {
 
-  const [todo, setTodo] = useState("");
+  const [text, setText] = useState("");
 
   function handleSubmit(e) {
     e.preventDefault();
-    addTodo(todo);
+    addTodo({
+      text,
+      id: `todo-${nanoid()}`
+    });
     clearForm();
   }
 
   function clearForm() {
-    setTodo("");
+    setText("");
   }
 
   return (
     <form>
       <label htmlFor="todo"> 
         Todo:
-        <input type="text" name="todo" value={todo} onChange={(e) => setTodo(e.target.value)}/>
+        <input type="text" name="todo" value={text} onChange={(e) => setText(e.target.value)}/>
       </label>
       <button type="submit" onClick={handleSubmit}>Add Todo</button>
     </form>
