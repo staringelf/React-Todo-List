@@ -7,9 +7,11 @@ function Form ({ addTodo }) {
 
   function handleSubmit(e) {
     e.preventDefault();
+    if (!text) return;
     addTodo({
       text,
-      id: `todo-${nanoid()}`
+      id: `todo-${nanoid()}`,
+      completed: false
     });
     clearForm();
   }

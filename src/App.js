@@ -10,11 +10,25 @@ function App() {
     setTodos([
       ...todos, 
       todo
-    ])
+    ]);
   }
 
   function deleteTodo(id) {
     setTodos(todos.filter((todo) => todo.id !== id));
+  }
+
+  function deleteAll(){
+    setTodos([]);
+  }
+
+  function toggleAll(){
+    setTodos(todos.map((todo) => (
+      {
+        ...todo,
+        completed: !todo.completed
+      }      
+    )
+    ));
   }
 
   return (
@@ -23,14 +37,18 @@ function App() {
         addTodo={addTodo} 
       />
       <ul className="todos">
-        {todos.map(({ text, id }) => (
+        {todos.map(({ text, id, completed }) => (
           <Todo 
             text={text} 
             id={id} 
+            completed={completed}
             deleteTodo={deleteTodo}/>
         ))}
       </ul>
 
+      <button onClick={deleteAll}>Delete All</button>
+      
+      <button onClick={toggleAll}>Toggle All</button>
    </div>
   );
 }
