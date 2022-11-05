@@ -21,12 +21,12 @@ function Form ({ addTodo }) {
   }
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <label htmlFor="todo"> 
         Todo:
         <input type="text" name="todo" value={text} onChange={(e) => setText(e.target.value)}/>
       </label>
-      <button type="submit" onClick={handleSubmit}>Add Todo</button>
+      <button type="submit">Add Todo</button>
     </form>
   )
 }

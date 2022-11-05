@@ -41,6 +41,16 @@ function App() {
     ));
   }
 
+  function updateTodo(text, id){
+    console.log(text)
+    setTodos(todos.map((todo) => (
+      todo.id === id ? {
+        ...todo,
+        text: text
+      } : todo 
+    )))
+  }
+
   function completeAll() {
     setTodos(todos.map((todo) => (
       { 
@@ -63,7 +73,8 @@ function App() {
             id={id} 
             completed={completed}
             deleteTodo={deleteTodo}
-            toggleTodo={toggleTodo}/>
+            toggleTodo={toggleTodo}
+            updateTodo={updateTodo}/>
         ))}
       </ul>
 
