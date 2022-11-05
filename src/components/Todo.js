@@ -6,6 +6,7 @@ function Todo ({ text, id, completed, deleteTodo, toggleTodo, updateTodo }) {
 
   function handleSubmit(e) {
     e.preventDefault();
+    if (!newText) return;
     updateTodo(newText, id);
     clearForm();
   }
