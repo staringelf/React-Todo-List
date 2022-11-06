@@ -1,32 +1,51 @@
-import { useState } from "react"; 
+import { useEffect, useState, useRef } from "react";
 
-function Todo ({ text, id, completed, deleteTodo, toggleTodo, updateTodo }) {
+function Todo ({ text, id, completed, deleteTodo, toggleTodo, updateTodo, updateCurrentlyEditing }) {
 
-  const [newText, setNewText] = useState("");
+  const [newText, setNewText] = useState(text);
+  const [editing, setEditing] = useState(false);
 
+  const editingInput = useRef(null);
+
+  useEffect(() => {
+    if (!editing) return;
+    editingInput.current.focus();
+  }, [editing, id]);
+  
   function handleSubmit(e) {
     e.preventDefault();
     if (!newText) return;
     updateTodo(newText, id);
-    clearForm();
+    setEditing(false);
   }
 
-  function clearForm(){
-    setNewText("");
+  function handleEditInputChange (e) {
+    setNewText(e.target.value);
+    updateTodo(e.target.value, id);
+  }
+
+  function handleEditButtonClick (e) {
+    const input = e.target.parentNode.querySelector('input[type="text"]');
+    console.log(input);
+    input.focus();
+    setEditing(!editing);
   }
 
   return (
-    <li className="flex items-center text-white bg-primary-400 mb-3 p-2" id={id} key={id} data-completed={completed}>
-      <label htmlFor={`input-${id}`} className="group cursor-pointer">
-        <input onChange={() => toggleTodo(id)} value={completed} className="appearance-none w-3.5 h-3.5 mr-2 border rounded-full ease-linear duration-400 group-hover:shadow-checkbox group-hover:border-secondary checked:border-secondary checked:bg-secondary" id={`input-${id}` } type="checkbox" />
+    <li className="relative flex items-center text-white bg-primary-400 mb-3 p-2" id={id} key={id} data-completed={completed}>
+      <label htmlFor={`input-${id}`} className="group cursor-pointer" >
+        <input checked={completed} onChange={() => toggleTodo(id)} value={completed} className="appearance-none w-3.5 h-3.5 mr-2 border rounded-full ease-linear duration-400 group-hover:shadow-checkbox group-hover:border-secondary checked:border-secondary checked:bg-secondary" id={`input-${id}` } type="checkbox" />
         <span className={completed ? 'line-through text-light' : ''}>{text}</span>
       </label>
-      <button className="ml-auto" onClick={() => deleteTodo(id)}>x</button>
-      <button className="hidden" onClick={() => toggleTodo(id)}>Toggle</button>
-      <form className="hidden" onSubmit={handleSubmit}>
-        <input type="text" value={newText} onChange={(e) => setNewText(e.target.value)}/>
-        <button type="submit">Update</button>
+      <form className={!editing && 'hidden'} onSubmit={handleSubmit}>
+        <input ref={editingInput} className="absolute left-7.5 top-2 bg-primary-400 outline-none border-0 border-b border-white" id={`edit-box-${id}`} type="text" value={newText} onChange={handleEditInputChange}/>
+        <button className="hidden" type="submit">Update</button>
       </form>
+      
+      <button className="ml-auto" onClick={handleEditButtonClick}>E</button> 
+      <button className="ml-2" onClick={() => deleteTodo(id)}>x</button>
+      <button className="hidden" onClick={() => toggleTodo(id)}>Toggle</button>
+      
     </li>
   )
 }

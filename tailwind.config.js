@@ -14,6 +14,9 @@ module.exports = {
       },
       boxShadow: {
         'checkbox': '0 0 0 3px rgba(238, 156, 167, 0.2)',
+      },
+      spacing: {
+        '7.5': "30px"
       }
     },
   },
