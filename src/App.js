@@ -62,26 +62,29 @@ function App() {
   }
 
   return (
-    <div>
-      <Form 
-        addTodo={addTodo} 
-      />
-      <ul className="todos">
-        {todos.map(({ text, id, completed }) => (
-          <Todo 
-            text={text} 
-            id={id} 
-            completed={completed}
-            deleteTodo={deleteTodo}
-            toggleTodo={toggleTodo}
-            updateTodo={updateTodo}/>
-        ))}
-      </ul>
-
-      <button onClick={deleteAll}>Delete All</button>
-      <button onClick={toggleAll}>Toggle All</button>
-      <button onClick={completeAll}>Complete All</button>
-   </div>
+    <div className="app-container bg-gradient-to-r from-green-400 to-blue-500 flex h-screen">
+      <div className="m-auto bg-primary-600 white p-6 rounded-lg text-white max-w-md w-full">
+        <h2 className="text-white text-xl font-semibold mb-4">TO DO LIST</h2>
+        <Form addTodo={addTodo} 
+        />
+        <ul className="todos">
+          {todos.map(({ text, id, completed }) => (
+            <Todo 
+              text={text} 
+              id={id} 
+              completed={completed}
+              deleteTodo={deleteTodo}
+              toggleTodo={toggleTodo}
+              updateTodo={updateTodo}/>
+          ))}
+        </ul>
+        <div className="hidden">
+          <button onClick={deleteAll}>Delete All</button>
+          <button onClick={toggleAll}>Toggle All</button>
+          <button onClick={completeAll}>Complete All</button>
+        </div>
+      </div>
+    </div>
   );
 }
 

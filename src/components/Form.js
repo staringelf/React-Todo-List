@@ -21,12 +21,12 @@ function Form ({ addTodo }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="todo"> 
-        Todo:
-        <input type="text" name="todo" value={text} onChange={(e) => setText(e.target.value)}/>
+    <form className="text-white flex gap-1 w-full mb-4" onSubmit={handleSubmit}>
+      <label htmlFor="todo" className="flex-1" > 
+        <span className="hidden">Todo</span>
+        <input className="w-full text-inherit px-1 py-2 border-0 border-b border-white bg-transparent outline-0" type="text" name="todo" placeholder="Add New Todo" value={text} onChange={(e) => setText(e.target.value)}/>
       </label>
-      <button type="submit">Add Todo</button>
+      <button className="text-inherit" type="submit">Add Todo</button>
     </form>
   )
 }
