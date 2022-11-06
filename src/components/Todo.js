@@ -17,9 +17,9 @@ function Todo ({ text, id, completed, deleteTodo, toggleTodo, updateTodo }) {
 
   return (
     <li className="flex items-center text-white bg-primary-400 mb-3 p-2" id={id} key={id} data-completed={completed}>
-      <label htmlFor={`input-${id}`}>
-        <input className="appearance-none w-3.5 h-3.5 mr-2 border rounded-full" id={`input-${id}` } type="checkbox" />
-        <span>{text}</span>
+      <label htmlFor={`input-${id}`} className="group cursor-pointer">
+        <input onChange={() => toggleTodo(id)} value={completed} className="appearance-none w-3.5 h-3.5 mr-2 border rounded-full ease-linear duration-400 group-hover:shadow-checkbox group-hover:border-secondary checked:border-secondary checked:bg-secondary" id={`input-${id}` } type="checkbox" />
+        <span className={completed ? 'line-through text-light' : ''}>{text}</span>
       </label>
       <button className="ml-auto" onClick={() => deleteTodo(id)}>x</button>
       <button className="hidden" onClick={() => toggleTodo(id)}>Toggle</button>
