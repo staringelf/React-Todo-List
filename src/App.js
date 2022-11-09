@@ -3,6 +3,7 @@ import FilterButton from "./components/FilterButton";
 import Form from "./components/Form";
 import Todo from "./components/Todo";
 
+
 const FILTER_MAP = {
   All: () => true,
   Active: (task) => !task.completed,

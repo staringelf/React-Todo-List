@@ -1,4 +1,6 @@
 import { useEffect, useState, useRef } from "react";
+import trashcan from '../icons/trashcan.svg';
+import edit from '../icons/edit.svg';
 
 function Todo ({ text, id, completed, deleteTodo, toggleTodo, updateTodo, isEditing, setCurrentlyEditing }) {
 
@@ -38,8 +40,12 @@ function Todo ({ text, id, completed, deleteTodo, toggleTodo, updateTodo, isEdit
         <button className="hidden" type="submit">Update</button>
       </form>
       
-      <button className="ml-auto" onClick={handleEditButtonClick}>E</button> 
-      <button className="ml-2" onClick={() => deleteTodo(id)}>x</button>
+      <button className="ml-auto" onClick={handleEditButtonClick}>
+        <img src={edit} alt="edit" />
+      </button> 
+      <button className="ml-2" onClick={() => deleteTodo(id)}>
+        <img src={trashcan} alt="delete" />    
+      </button>
       <button className="hidden" onClick={() => toggleTodo(id)}>Toggle</button>
       
     </li>
