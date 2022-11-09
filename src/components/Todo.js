@@ -1,22 +1,21 @@
 import { useEffect, useState, useRef } from "react";
 
-function Todo ({ text, id, completed, deleteTodo, toggleTodo, updateTodo, updateCurrentlyEditing }) {
+function Todo ({ text, id, completed, deleteTodo, toggleTodo, updateTodo, isEditing, setCurrentlyEditing }) {
 
   const [newText, setNewText] = useState(text);
-  const [editing, setEditing] = useState(false);
 
   const editingInput = useRef(null);
 
   useEffect(() => {
-    if (!editing) return;
+    if (!isEditing) return;
     editingInput.current.focus();
-  }, [editing, id]);
+  }, [isEditing]);
   
   function handleSubmit(e) {
     e.preventDefault();
     if (!newText) return;
     updateTodo(newText, id);
-    setEditing(false);
+    setCurrentlyEditing(id);
   }
 
   function handleEditInputChange (e) {
@@ -25,10 +24,7 @@ function Todo ({ text, id, completed, deleteTodo, toggleTodo, updateTodo, update
   }
 
   function handleEditButtonClick (e) {
-    const input = e.target.parentNode.querySelector('input[type="text"]');
-    console.log(input);
-    input.focus();
-    setEditing(!editing);
+    isEditing ? setCurrentlyEditing("") : setCurrentlyEditing(id);
   }
 
   return (
@@ -37,7 +33,7 @@ function Todo ({ text, id, completed, deleteTodo, toggleTodo, updateTodo, update
         <input checked={completed} onChange={() => toggleTodo(id)} value={completed} className="appearance-none w-3.5 h-3.5 mr-2 border rounded-full ease-linear duration-400 group-hover:shadow-checkbox group-hover:border-secondary checked:border-secondary checked:bg-secondary" id={`input-${id}` } type="checkbox" />
         <span className={completed ? 'line-through text-light' : ''}>{text}</span>
       </label>
-      <form className={!editing && 'hidden'} onSubmit={handleSubmit}>
+      <form className={!isEditing && 'hidden'} onSubmit={handleSubmit}>
         <input ref={editingInput} className="absolute left-7.5 top-2 bg-primary-400 outline-none border-0 border-b border-white" id={`edit-box-${id}`} type="text" value={newText} onChange={handleEditInputChange}/>
         <button className="hidden" type="submit">Update</button>
       </form>

@@ -1,11 +1,22 @@
 import { useState } from "react";
+import FilterButton from "./components/FilterButton";
 import Form from "./components/Form";
 import Todo from "./components/Todo";
+
+const FILTER_MAP = {
+  All: () => true,
+  Active: (task) => !task.completed,
+  Completed: (task) => task.completed
+}
+
+const FILTER_NAMES = Object.keys(FILTER_MAP);
 
 function App() {
 
   const [todos, setTodos] = useState([]);
   const [completedAll, setCompletedAll] = useState(false);
+  const [filter, setFilter] = useState("All");
+  const [currentlyEditing, setCurrentlyEditing] = useState("");
 
   function addTodo(todo) {
     setTodos([
@@ -61,6 +72,15 @@ function App() {
     setCompletedAll(!completedAll);
   }
 
+  const filterList = FILTER_NAMES.map((name) => (
+    <FilterButton 
+      name={name}
+      key={name}
+      isPressed={name === filter} 
+      setFilter={setFilter}
+    />
+  ));
+
   return (
     <div className="app-container bg-gradient-to-r from-green-400 to-blue-500 flex h-screen">
       <div className="m-auto bg-primary-600 white p-6 rounded-lg text-white max-w-md w-full">
@@ -68,20 +88,26 @@ function App() {
         <Form addTodo={addTodo} 
         />
         <ul className="todos">
-          {todos.map(({ text, id, completed }) => (
+          {todos.filter(FILTER_MAP[filter]).map(({ text, id, completed }) => (
             <Todo 
               text={text} 
               id={id} 
               completed={completed}
               deleteTodo={deleteTodo}
               toggleTodo={toggleTodo}
-              updateTodo={updateTodo}/>
+              updateTodo={updateTodo}
+              isEditing={id === currentlyEditing}
+              setCurrentlyEditing={setCurrentlyEditing}/>
           ))}
         </ul>
+
         <div className="hidden">
           <button onClick={deleteAll}>Delete All</button>
           <button onClick={toggleAll}>Toggle All</button>
           <button onClick={completeAll}>Complete All</button>
+        </div>
+        <div className="">
+          {filterList}
         </div>
       </div>
     </div>
