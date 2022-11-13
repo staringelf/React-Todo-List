@@ -15,9 +15,10 @@ function Todo ({ text, id, completed, deleteTodo, toggleTodo, updateTodo, isEdit
   
   function handleSubmit(e) {
     e.preventDefault();
-    if (!newText) return;
-    updateTodo(newText, id);
-    setCurrentlyEditing(id);
+    const text = newText.trim();
+    if (!text) return;
+    updateTodo(text, id);
+    setCurrentlyEditing();
   }
 
   function handleEditInputChange (e) {
@@ -40,10 +41,10 @@ function Todo ({ text, id, completed, deleteTodo, toggleTodo, updateTodo, isEdit
         <button className="hidden" type="submit">Update</button>
       </form>
       
-      <button className="ml-auto" onClick={handleEditButtonClick}>
+      <button className="ml-auto text-white" onClick={handleEditButtonClick}>
         <img src={edit} alt="edit" />
       </button> 
-      <button className="ml-2" onClick={() => deleteTodo(id)}>
+      <button className="ml-2 text-white" onClick={() => deleteTodo(id)}>
         <img src={trashcan} alt="delete" />    
       </button>
       <button className="hidden" onClick={() => toggleTodo(id)}>Toggle</button>

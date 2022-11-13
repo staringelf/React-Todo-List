@@ -2,6 +2,7 @@ import { useState } from "react";
 import FilterButton from "./components/FilterButton";
 import Form from "./components/Form";
 import Todo from "./components/Todo";
+import useLocalStorage from "./lib/useLocalStorage";
 
 
 const FILTER_MAP = {
@@ -14,7 +15,8 @@ const FILTER_NAMES = Object.keys(FILTER_MAP);
 
 function App() {
 
-  const [todos, setTodos] = useState([]);
+  // const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useLocalStorage('todos', []);
   const [completedAll, setCompletedAll] = useState(false);
   const [filter, setFilter] = useState("All");
   const [currentlyEditing, setCurrentlyEditing] = useState("");
@@ -107,7 +109,7 @@ function App() {
           <button onClick={toggleAll}>Toggle All</button>
           <button onClick={completeAll}>Complete All</button>
         </div>
-        <div className="">
+        <div className={!todos.length && 'hidden'}>
           {filterList}
         </div>
       </div>
